@@ -1,12 +1,22 @@
-hs.hotkey.bind({"cmd"}, "F1",
-  function ()
-    hs.application.launchOrFocus("ITerm")
-    hs.eventtap.keyStroke({"cmd"}, "n")
+hs.hotkey.bind({"ctrl"}, "F1", function()
+  if hs.application.find("iTerm") then
+    hs.applescript.applescript([[
+      tell application "iTerm"
+        create window with default profile
+      end tell
+    ]])
+  else
+    hs.application.open("iTerm")
   end
-)
-hs.hotkey.bind({"cmd"}, "F2",
-  function ()
-    hs.application.launchOrFocus("Google Chrome")
-    hs.eventtap.keyStroke({"cmd"}, "n")
+end)
+hs.hotkey.bind({"ctrl"}, "F2", function()
+  if hs.application.find("Google Chrome") then
+    hs.applescript.applescript([[
+      tell application "Google Chrome"
+        make new window
+      end tell
+    ]])
+  else
+    hs.application.open("Google Chrome")
   end
-)
+end)
