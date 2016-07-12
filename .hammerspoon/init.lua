@@ -29,6 +29,8 @@ do
     fraction = fraction or 2
 
     local w = hs.window.focusedWindow()
+    if not w then return end
+
     local wf = w:frame()
     local s = w:screen()
     local sf = s:frame()
