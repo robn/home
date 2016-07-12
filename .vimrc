@@ -109,23 +109,14 @@ function! ToggleSplitMaxEven()
     endif
 endfunction
 
-"nmap <silent> <F4><CR>      :call ToggleSplitMaxEven()<CR>
-"nmap <silent> <M-CR>             :call ToggleSplitMaxEven()<CR>
+nmap <silent> <TAB><CR>      :call ToggleSplitMaxEven()<CR>
 
-" moving around splits (thanks daniel)
-"nmap <silent> <F4><Up>      <C-W>k
-"nmap <silent> <F4><Down>    <C-W>j
-"nmap <silent> <F4><Left>    <C-W>k:resize<CR>
-"nmap <silent> <F4><Right>   <C-W>j:resize<CR>
-"nmap <silent> <F4><F4>      :sp<CR>
-"nmap          <F4><Space>   :split 
-
-nmap <silent> <M-Up>               <C-W>k
-nmap <silent> <M-Down>             <C-W>j
-nmap <silent> <M-Left>             <C-W>k:resize<CR>
-nmap <silent> <M-Right>            <C-W>j:resize<CR>
-"nmap <silent> <M-SPACE><M-SPACE> :sp<CR>
-"nmap          <M-SPACE>          :split 
+nmap <silent> <TAB><Up>      <C-W>k
+nmap <silent> <TAB><Down>    <C-W>j
+nmap <silent> <TAB><Left>    <C-W>k:resize<CR>
+nmap <silent> <TAB><Right>   <C-W>j:resize<CR>
+nmap <silent> <TAB><TAB>     :sp<CR>
+nmap          <TAB><Space>   :split 
 
 " make collapsed splits tiny, just a status bar
 set winminheight=0
