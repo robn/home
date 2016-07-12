@@ -1,4 +1,5 @@
 require("gravity_windows")
+require("app_shortcuts")
 
 -- set up the config reload
 hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/",
