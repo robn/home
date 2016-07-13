@@ -293,15 +293,15 @@ autocmd QuickFixCmdPost [^l]* nested copen
 autocmd QuickFixCmdPost    l* nested lopen
 
 
-function! PasteToPasteBin()
-    let text = getreg('"')
-    if strlen(text) == 0
-        echo "Nothing to paste."
-        return
-    endif
-    echo "Pasting..." system("curl -s -w '%{redirect_url}' --data-urlencode code2@- -d format=text -d paste=Send -d expiry=d -d parent_pid= -d poster= http://pastebin.mozilla.org", getreg('"'))
-endfunction
-nmap <silent> <TAB><TAB> :call PasteToPasteBin()<CR>
+"function! PasteToPasteBin()
+"    let text = getreg('"')
+"    if strlen(text) == 0
+"        echo "Nothing to paste."
+"        return
+"    endif
+"    echo "Pasting..." system("curl -s -w '%{redirect_url}' --data-urlencode code2@- -d format=text -d paste=Send -d expiry=d -d parent_pid= -d poster= http://pastebin.mozilla.org", getreg('"'))
+"endfunction
+"nmap <silent> <TAB><TAB> :call PasteToPasteBin()<CR>
 
 let Tlist_Process_File_Always = 1
 
