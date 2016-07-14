@@ -1,4 +1,4 @@
-hs.hotkey.bind({"ctrl"}, "F1", function()
+hs.hotkey.bind({"cmd"}, "F1", function()
   if hs.application.find("iTerm") then
     hs.applescript.applescript([[
       tell application "iTerm"
@@ -9,7 +9,7 @@ hs.hotkey.bind({"ctrl"}, "F1", function()
     hs.application.open("iTerm")
   end
 end)
-hs.hotkey.bind({"ctrl"}, "F2", function()
+hs.hotkey.bind({"cmd"}, "F2", function()
   if hs.application.find("Google Chrome") then
     hs.applescript.applescript([[
       tell application "Google Chrome"
