@@ -354,6 +354,7 @@ Plugin 'edkolev/promptline.vim'
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'w0ng/vim-hybrid'
 Plugin 'nanotech/jellybeans.vim'
+Plugin 'c9s/perlomni.vim'
 
 call vundle#end()
 filetype plugin indent on
