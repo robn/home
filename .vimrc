@@ -341,7 +341,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Bundles
 Plugin 'tpope/vim-fugitive'
 Plugin 'rust-lang/rust.vim'
-Plugin 'rking/ag.vim'
+Plugin 'mileszs/ack.vim'
 Plugin 'vim-perl/vim-perl'
 "Plugin 'pjcj/vim-hl-var'
 Plugin 'cespare/vim-toml'
@@ -359,6 +359,10 @@ call vundle#end()
 filetype plugin indent on
 " end Vundle
 
+" Use ag for ack
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " Promptline
 " :PromptlineSnapshot! ~/.bash_prompt
