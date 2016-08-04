@@ -8,11 +8,12 @@ do
     centre = function (w,s,f) return s.x+(s.w-s.w/f)/2, s.y+(s.h-s.h/f)/2, s.w/f, s.h/f end,
   }
 
-  local gravitateWindow = function (gravity, fraction)
-    fraction = fraction or 2
+  local window_cache = {}
 
-    local w = hs.window.focusedWindow()
+  local gravitateWindow = function (w, gravity, fraction)
     if not w then return end
+
+    fraction = fraction or 2
 
     local wf = w:frame()
     local s = w:screen()
@@ -20,24 +21,42 @@ do
 
     wf.x, wf.y, wf.w, wf.h = position[gravity](wf,sf,fraction)
     w:setFrame(wf)
+
+    --window_cache[w:id()] = { gravity, fraction }
   end
 
+--[[
+  hs.spaces.watcher.new(function (n)
+    for id,v in pairs(window_cache) do
+      local w = hs.window.get(id)
+      print(id, w)
+      if not w then
+        window_cache[id] = nil
+      else
+        gravitateWindow(w, v[1], v[2])
+      end
+    end
+  end)
+    :start()
+--]]
+
+  local focusedWindow = hs.window.focusedWindow
   hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Left",
-    function() gravitateWindow("left", 2) end
+    function() gravitateWindow(focusedWindow(), "left", 2) end
   )
   hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Right",
-    function() gravitateWindow("right", 2) end
+    function() gravitateWindow(focusedWindow(), "right", 2) end
   )
   hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Up",
-    function() gravitateWindow("top", 2) end
+    function() gravitateWindow(focusedWindow(), "top", 2) end
   )
   hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Down",
-    function() gravitateWindow("bottom", 2) end
+    function() gravitateWindow(focusedWindow(), "bottom", 2) end
   )
   hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Return",
-    function() gravitateWindow("centre", 2) end
+    function() gravitateWindow(focusedWindow(), "centre", 2) end
   )
   hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Space",
-    function() gravitateWindow("centre", 1) end
+    function() gravitateWindow(focusedWindow(), "centre", 1) end
   )
 end
