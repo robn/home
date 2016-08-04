@@ -1,11 +1,11 @@
 -- gravity windows
 do
   local position = {
-    left   = function (s,f) return s.x,           s.y,           s.w/f, s.h   end,
-    right  = function (s,f) return s.x+s.w-s.w/f, s.y,           s.w/f, s.h   end,
-    top    = function (s,f) return s.x,           s.y,           s.w,   s.h/f end,
-    bottom = function (s,f) return s.x,           s.y+s.h-s.h/f, s.w,   s.h/f end,
-    centre = function (s,f) return s.x+(s.w-s.w/f)/2, s.y+(s.h-s.h/f)/2, s.w/f, s.h/f end,
+    left   = function (w,s,f) return s.x,           s.y,           s.w/f, s.h   end,
+    right  = function (w,s,f) return s.x+s.w-s.w/f, s.y,           s.w/f, s.h   end,
+    top    = function (w,s,f) return w.x,           s.y,           s.w/f, s.h/f end,
+    bottom = function (w,s,f) return w.x,           s.y+s.h-s.h/f, s.w/f, s.h/f end,
+    centre = function (w,s,f) return s.x+(s.w-s.w/f)/2, s.y+(s.h-s.h/f)/2, s.w/f, s.h/f end,
   }
 
   local gravitateWindow = function (gravity, fraction)
@@ -18,7 +18,7 @@ do
     local s = w:screen()
     local sf = s:frame()
 
-    wf.x, wf.y, wf.w, wf.h = position[gravity](sf,fraction)
+    wf.x, wf.y, wf.w, wf.h = position[gravity](wf,sf,fraction)
     w:setFrame(wf)
   end
 
