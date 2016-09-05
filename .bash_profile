@@ -1,4 +1,5 @@
 source $HOME/.bash_prompt
+source $HOME/.bash_secret
 
 eval "$(plenv init -)"
 
