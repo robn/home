@@ -13,3 +13,5 @@
 	editor = vim
 [pull]
 	rebase = true
+[diff]
+  compactionHeuristic = true
