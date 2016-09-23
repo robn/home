@@ -8,4 +8,4 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 alias vi=vim
 alias vim="vim -o"
 
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.cargo/bin:$PATH"
