@@ -9,3 +9,4 @@ alias vi=vim
 alias vim="vim -o"
 
 export PATH="$HOME/bin:$HOME/.cargo/bin:$PATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
