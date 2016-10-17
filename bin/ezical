@@ -1,0 +1,47 @@
+#!/usr/bin/env perl
+
+use 5.024;
+use warnings;
+use strict;
+
+use HTTP::Tiny;
+use HTML::TreeBuilder 5 -weak;
+use Date::Parse qw(str2time);
+use Date::Format qw(time2str);
+
+my $ua = HTTP::Tiny->new;
+my $res = $ua->get(q{http://soccer5s.ezleagues.ezfacility.com/print.aspx?type=schedule&title=Full+Kit+Bankers%27s+Schedule&team_id=1910513&league_id=280971&facility_id=1446});
+die "E: $res->{status} $res->{reason}\n" unless $res->{success};
+
+print <<ICAL;
+BEGIN:VCALENDAR
+ICAL
+
+my $tree = HTML::TreeBuilder->new_from_content($res->{content});
+my @rows = $tree->look_down(_tag => 'tr', sub { ($_[0]->attr('class') // '') =~ m/^RowStyle|AlternateRowStyle$/ });
+
+for my $row (@rows) {
+  my @cols = $row->look_down(_tag => 'td');
+  my ($team1, $team2, $time, $location) = map { $_->as_trimmed_text(extra_chars => '\xA0') } @cols[2,4,5,6];
+
+  my $dateurl = [$cols[1]->content_list]->[0]->attr('href');
+  my $date = join '-', reverse ($dateurl =~ m{d=(\d{1,2})/(\d{1,2})/(\d{4})});
+
+  my $start = str2time("$date $time");
+
+  my $dtstart = time2str('%Y%m%dT%H%M%SZ', $start, 'UTC');
+  my $dtend =   time2str('%Y%m%dT%H%M%SZ', $start+45*60, 'UTC');
+
+print <<ICAL;
+BEGIN:VEVENT
+DTSTART;VALUE=DATE-TIME:$dtstart
+DTEND;VALUE=DATE-TIME:$dtend
+SUMMARY:$team1 vs. $team2
+LOCATION:$location
+END:VEVENT
+ICAL
+}
+
+print <<ICAL;
+END:VCALENDAR
+ICAL
