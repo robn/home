@@ -10,13 +10,19 @@ hs.hotkey.bind({"cmd"}, "F1", function()
   end
 end)
 hs.hotkey.bind({"cmd"}, "F2", function()
-  if hs.application.find("Google Chrome") then
+  if hs.application.find("FirefoxDeveloperEdition") then
     hs.applescript.applescript([[
-      tell application "Google Chrome"
-        make new window
+      tell application "FirefoxDeveloperEdition"
+        activate
+        delay 1.2
+        tell application "System Events"
+          tell process "FirefoxDeveloperEdition"
+            keystroke "n" using {command down} # open new tab
+          end tell
+        end tell
       end tell
     ]])
   else
-    hs.application.open("Google Chrome")
+    hs.application.open("FirefoxDeveloperEdition")
   end
 end)
