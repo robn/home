@@ -137,7 +137,9 @@ function unpack_data (data)
         end
 
         if event == "OUT" then
-          table.insert(facts, ball.overs_actual .. " " .. event .. " " .. ball.dismissal)
+          local dismissal = ball.dismissal
+          dismissal = string.gsub(dismissal, '&dagger;', '†')
+          table.insert(facts, ball.overs_actual .. " " .. event .. " " .. dismissal)
 
         elseif event == "SIX" or event == "FOUR" then
           local _, _, player = string.find(ball.players, "to (.+)$")
