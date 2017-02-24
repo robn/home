@@ -1,5 +1,6 @@
 require("gravity_windows")
 require("app_shortcuts")
+require("sixfour")
 --require("slacker")
 
 -- set up the config reload
