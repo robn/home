@@ -445,7 +445,10 @@ function update_matchlist ()
       })
     end
     matchlist = new_matchlist
-    if not game_code then
+    if #matchlist == 0 then
+      menu:setTitle("🏏")
+      menu:setMenu({ { title = "No matches in progress", disabled = true } })
+    elseif not game_code then
       menu:setTitle("🏏")
       menu:setMenu(matchlist)
     end
