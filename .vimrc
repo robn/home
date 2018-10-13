@@ -67,7 +67,7 @@ set textwidth=0
 set formatoptions=croql
 
 " for extra perlishness. the double ones are the future, apparently
-set matchpairs+=<:>,«:»
+set matchpairs+=<:>
 
 
 " braindead in most places
