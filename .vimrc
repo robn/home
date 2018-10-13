@@ -315,7 +315,7 @@ set list
 
 " Airline extensions
 
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 
 " Show git branch name
 let g:airline#extensions#branch#enabled = 1
@@ -368,12 +368,27 @@ endif
 " Promptline
 " :PromptlineSnapshot! ~/.bash_prompt
 
+let g:promptline_theme = 'powerlineclone'
+let g:promptline_powerline_symbols = 0
+let g:promptline_symbols = {
+    \ 'left'       : '',
+    \ 'left_alt'   : '',
+    \ 'dir_sep'    : ' / ',
+    \ 'truncation' : '…',
+    \ 'vcs_branch' : '',
+    \ 'space'      : ' '}
 let g:promptline_preset = {
-        \'a' : [ promptline#slices#host() ],
-        \'b' : [ promptline#slices#user() ],
-        \'c' : [ promptline#slices#cwd() ],
-        \'y' : [ promptline#slices#vcs_branch(), promptline#slices#git_status() ],
-        \'warn' : [ promptline#slices#last_exit_code() ]}
+    \'a' : [ promptline#slices#host() ],
+    \'b' : [ promptline#slices#user() ],
+    \'c' : [ promptline#slices#cwd() ],
+    \'x' : [ promptline#slices#vcs_branch(), promptline#slices#git_status() ],
+    \'warn' : [ promptline#slices#last_exit_code() ],
+    \'z' : [ '\$' ],
+    \'options': {
+      \'left_sections' : [ 'a', 'b' ],
+      \'right_sections' : [ 'c' ],
+      \'left_only_sections' : [ 'a', 'b', 'c', 'x', 'warn', 'z' ]}}
+
 
 set background=dark
 colorscheme jellybeans
