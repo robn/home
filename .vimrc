@@ -191,7 +191,7 @@ endif
 "highlight  perlFunctionName  ctermfg=red
 
 " colour pod embedded in perl files
-let perl_include_pod = 1
+" let perl_include_pod = 1
 
 " colours are go
 syntax enable
@@ -242,6 +242,10 @@ autocmd Filetype avr    call FiletypeAvr()
 
 " other extensions that I use
 autocmd BufRead,BufNewFile *.phtml,*.epl,*.em,*.ev,*.ec,*.et,*.psgi setlocal filetype=perl
+
+" don't complete from included files, since the perl autoincluder is
+" extremely greedy and takes forever to do its work
+autocmd FileType perl set complete-=i
 
 command! SetGLSLFileType call SetGLSLFileType()
 function! SetGLSLFileType()
@@ -354,7 +358,7 @@ Plugin 'edkolev/promptline.vim'
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'w0ng/vim-hybrid'
 Plugin 'nanotech/jellybeans.vim'
-Plugin 'c9s/perlomni.vim'
+"Plugin 'c9s/perlomni.vim'
 
 call vundle#end()
 filetype plugin indent on
