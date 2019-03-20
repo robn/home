@@ -316,6 +316,9 @@ let m = matchadd("TrailingWS", "[ \t]\\+$")
 set listchars=tab:>-
 set list
 
+" The new XXX
+iabbr --r -- robn, <C-R>=strftime("%Y-%m-%d")<CR>
+
 
 " Airline extensions
 
