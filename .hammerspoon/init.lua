@@ -1,4 +1,4 @@
-require("gravity_windows")
+--require("gravity_windows")
 require("app_shortcuts")
 require("fancybag")
 --require("sixfour")
@@ -19,3 +19,17 @@ hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/",
   end
 ):start()
 hs.alert.show("Hammerspoon config reloaded")
+
+local hyper = {"ctrl", "alt", "cmd"}
+
+hs.loadSpoon("MiroWindowsManager")
+
+hs.window.animationDuration = 0.1
+spoon.MiroWindowsManager:bindHotkeys({
+  up         = {hyper, "up"},
+  right      = {hyper, "right"},
+  down       = {hyper, "down"},
+  left       = {hyper, "left"},
+  fullscreen = {hyper, "space"}
+})
+
