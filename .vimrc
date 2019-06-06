@@ -48,6 +48,8 @@ set autowrite
 " I like the status line, even if this is the only window
 set laststatus=2
 
+" I do lotsa macro thing
+set lazyredraw
 
 " indent
 set autoindent
@@ -346,17 +348,17 @@ let g:vundle_default_git_proto = 'git'
 Plugin 'VundleVim/Vundle.vim'
 
 " Bundles
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
 Plugin 'rust-lang/rust.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'vim-perl/vim-perl'
 "Plugin 'pjcj/vim-hl-var'
 Plugin 'cespare/vim-toml'
-Plugin 'godlygeek/tabular'
+"Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'vim-airline/vim-airline'
 Plugin 'majutsushi/tagbar'
-Plugin 'tomasr/molokai'
+"Plugin 'tomasr/molokai'
 Plugin 'edkolev/promptline.vim'
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'w0ng/vim-hybrid'
