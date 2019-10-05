@@ -1,6 +1,7 @@
 --require("gravity_windows")
 require("app_shortcuts")
 require("fancybag")
+require("place_windows")
 --require("sixfour")
 --require("slacker")
 
