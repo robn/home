@@ -1,0 +1,181 @@
+#!/usr/bin/env perl
+
+use 5.026;
+use warnings;
+use experimental qw(postderef signatures);
+
+use IPC::System::Simple qw(capturex);
+
+my ($hspec, $vspec) = @ARGV;
+unless ($hspec && $vspec) {
+  say "usage: tiler <horizontal-spec> <vertical-spec>";
+  exit 1;
+}
+
+# the active window id
+my $active_window = capturex(qw(xdotool getactivewindow));
+
+# find the top panel and get its size
+my %panel = _capture_shell_vars(qw(xdotool search --onlyvisible --class wingpanel getwindowgeometry --shell));
+
+# also get the size of the display
+my %display = _capture_shell_vars(qw(xdotool getdisplaygeometry --shell));
+
+# now we can compute the available desktop area, which is the display minus
+# the panel
+my %desktop = (
+  x      => 0,
+  y      => $panel{height},
+  width  => $display{width},
+  height => $display{height} - $panel{height},
+);
+
+# GTK apps (at least) have a rather large invisible frame around the visible
+# area of each window where the drop shadow is drawn. as far as X knows its
+# part of the window, so to get the positioning we want we have to offset our
+# target position by the frame size.
+#
+# If the window has such a frame, its extents are in the _GTK_FRAME_EXTENTS
+# property. Here we get it with xprop and parse it out and stash the values in
+# variables we can use. This is defensive; if the target window doesn't have
+# this property the extents are set to 0.
+my %frame = do {
+  my %frame;
+  my $raw = capturex('xprop', '-id', $active_window, '_GTK_FRAME_EXTENTS');
+  @frame{qw(left right top bottom)} = $raw =~ m/\D*(\d+)\D*/g;
+  %frame;
+};
+
+# current window geometry, adjusted for the frame
+my %current = _capture_shell_vars(qw(xdotool getwindowgeometry --shell), $active_window);
+%current = (
+  x      => $current{x} + $frame{left},
+  y      => $current{y} + $frame{top},
+  width  => $current{width} - $frame{left} - $frame{right},
+  height => $current{height} - $frame{top} - $frame{bottom},
+);
+
+# calculate target position and size for wanted specs
+my %target;
+@target{qw(x width)}  = _compute_horiz($hspec);
+@target{qw(y height)} = _compute_vert($vspec);
+
+# adjust the target position and size by the frame offset
+my %window = (
+  x      => $target{x} - $frame{left},
+  y      => $target{y} - $frame{top},
+  width  => $target{width} + $frame{left} + $frame{right},
+  height => $target{height} + $frame{top} + $frame{bottom},
+);
+
+# and move it!
+capturex('xdotool', 'windowsize', $active_window, $window{width}, $window{height});
+capturex('xdotool', 'windowmove', $active_window, $window{x},     $window{y});
+
+sub _rotate_spec ($compute_fn, $current_pos, $current_spread, $spec, @specs) {
+  push @specs, @specs;
+  while ($specs[0] ne $spec) {
+    shift @specs;
+  }
+  my ($pos, $spread) = ($current_pos, $current_spread);
+  while ($pos == $current_pos && $spread == $current_spread) {
+    ($pos, $spread) = $compute_fn->(shift @specs);
+  }
+  return ($pos, $spread);
+}
+
+sub _compute_horiz ($spec) {
+  my %fn = (
+    current => sub { ( $current{x}, $current{width} ) },
+    left => sub {
+      {
+        my ($x, $w) = _compute_horiz('left50');
+        return _compute_horiz('left25')
+          if $x == $current{x} && $w == $current{width};
+      }
+      {
+        my ($x, $w) = _compute_horiz('left25');
+        return _compute_horiz('left75')
+          if $x == $current{x} && $w == $current{width};
+      }
+      return _compute_horiz('left50');
+    },
+    left25 => sub { (
+      $desktop{x},
+      $desktop{width}*.25,
+    ) },
+    left50 => sub { (
+      $desktop{x},
+      $desktop{width}*.5,
+    ) },
+    left75 => sub { (
+      $desktop{x},
+      $desktop{width}*.75,
+    ) },
+    right => sub {
+      {
+        my ($x, $w) = _compute_horiz('right50');
+        return _compute_horiz('right25')
+          if $x == $current{x} && $w == $current{width};
+      }
+      {
+        my ($x, $w) = _compute_horiz('right25');
+        return _compute_horiz('right75')
+          if $x == $current{x} && $w == $current{width};
+      }
+      return _compute_horiz('right50');
+    },
+    right25 => sub { (
+      $desktop{x}+$desktop{width}*.75,
+      $desktop{width}*.25,
+    ) },
+    right50 => sub { (
+      $desktop{x}+$desktop{width}*.5,
+      $desktop{width}*.5,
+    ) },
+    right75 => sub { (
+      $desktop{x}+$desktop{width}*.25,
+      $desktop{width}*.75,
+    ) },
+    full => sub { (
+      $desktop{x},
+      $desktop{width},
+    ) },
+  );
+  my $fn = $fn{$spec};
+  die "invalid horizontal spec: $spec [expected: @{[sort keys %fn]}]\n"
+    unless $fn;
+  return $fn->();
+}
+
+sub _compute_vert ($spec) {
+  my %fn = (
+    current => sub { ( $current{y}, $current{height} ) },
+    top => sub { (
+      $desktop{y},
+      $desktop{height}*.5,
+    ) },
+    bottom => sub { (
+      $desktop{y}+$desktop{height}*.5,
+      $desktop{height}*.5,
+    ) },
+    full => sub { (
+      $desktop{y},
+      $desktop{height},
+    ) },
+  );
+  my $fn = $fn{$spec};
+  die "invalid vertical spec: $spec [expected: @{[sort keys %fn]}]\n"
+    unless $fn;
+  return $fn->();
+}
+
+# run given command, capture FOO=bar variables (one per line), return as hash
+sub _capture_shell_vars (@cmd) {
+  my %vars;
+  for my $line (split /\n/, capturex(@cmd)) {
+    my ($k, $v) = split '=', $line;
+    $vars{lc $k} = 0+$v;
+  }
+  return %vars;
+};
