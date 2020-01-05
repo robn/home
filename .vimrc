@@ -324,7 +324,7 @@ iabbr --r -- robn, <C-R>=strftime("%Y-%m-%d")<CR>
 
 " Airline extensions
 
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 
 " Show git branch name
 let g:airline#extensions#branch#enabled = 1
@@ -379,6 +379,14 @@ endif
 " :PromptlineSnapshot! ~/.bash_prompt
 
 let g:promptline_theme = 'powerlineclone'
+let g:promptline_powerline_symbols = 0
+let g:promptline_symbols = {
+    \ 'left'       : '',
+    \ 'left_alt'   : '',
+    \ 'dir_sep'    : ' / ',
+    \ 'truncation' : '…',
+    \ 'vcs_branch' : '',
+    \ 'space'      : ' '}
 let g:promptline_preset = {
     \'a' : [ promptline#slices#host() ],
     \'b' : [ promptline#slices#user() ],
