@@ -365,6 +365,7 @@ Plugin 'edkolev/promptline.vim'
 Plugin 'nanotech/jellybeans.vim'
 "Plugin 'c9s/perlomni.vim'
 Plugin 'udalov/kotlin-vim'
+Plugin 'arrufat/vala.vim'
 
 call vundle#end()
 filetype plugin indent on
