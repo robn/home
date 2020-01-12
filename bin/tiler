@@ -72,18 +72,6 @@ my %window = (
 capturex('xdotool', 'windowsize', $active_window, $window{width}, $window{height});
 capturex('xdotool', 'windowmove', $active_window, $window{x},     $window{y});
 
-sub _rotate_spec ($compute_fn, $current_pos, $current_spread, $spec, @specs) {
-  push @specs, @specs;
-  while ($specs[0] ne $spec) {
-    shift @specs;
-  }
-  my ($pos, $spread) = ($current_pos, $current_spread);
-  while ($pos == $current_pos && $spread == $current_spread) {
-    ($pos, $spread) = $compute_fn->(shift @specs);
-  }
-  return ($pos, $spread);
-}
-
 sub _compute_horiz ($spec) {
   my %fn = (
     current => sub { ( $current{x}, $current{width} ) },
