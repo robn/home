@@ -33,3 +33,5 @@ export VISUAL=/usr/bin/vim
 
 export PATH="$HOME/.plenv/bin:$PATH"
 eval "$(plenv init -)"
+
+export PATH="$HOME/.cargo/bin:$PATH"
