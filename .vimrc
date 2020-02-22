@@ -113,12 +113,14 @@ endfunction
 
 nmap <silent> <TAB><CR>      :call ToggleSplitMaxEven()<CR>
 
-nmap <silent> <TAB><Up>      <C-W>k
-nmap <silent> <TAB><Down>    <C-W>j
-nmap <silent> <TAB><Left>    <C-W>k:resize<CR>
-nmap <silent> <TAB><Right>   <C-W>j:resize<CR>
-nmap <silent> <TAB><TAB>     :sp<CR>
-nmap          <TAB><Space>   :split 
+nmap <silent> <TAB><Up>         <C-W>k
+nmap <silent> <TAB><Down>       <C-W>j
+nmap <silent> <TAB><TAB><Left>  <C-W>h
+nmap <silent> <TAB><TAB><Right> <C-W>l
+nmap <silent> <TAB><Left>       <C-W>k:resize<CR>
+nmap <silent> <TAB><Right>      <C-W>j:resize<CR>
+nmap <silent> <TAB><TAB>        :sp<CR>
+nmap          <TAB><Space>      :split
 
 " make collapsed splits tiny, just a status bar
 set winminheight=0
