@@ -186,6 +186,8 @@ alias vim="vim -o"
 export EDITOR=vim
 export VISUAL=/usr/bin/vim
 
+alias kitty=$HOME/.local/kitty.app/bin/kitty
+
 export PATH="$HOME/.plenv/bin:$PATH"
 eval "$(plenv init -)"
 
