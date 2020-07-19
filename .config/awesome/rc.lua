@@ -245,6 +245,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             --mykeyboardlayout,
+            sep,
             spotify_widget({
                 font = beautiful.font,
                 play_icon = "/home/robn/.icons/Arc/actions/24/player_play.png",
