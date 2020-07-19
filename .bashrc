@@ -188,6 +188,8 @@ export VISUAL=/usr/bin/vim
 
 alias kitty=$HOME/.local/kitty.app/bin/kitty
 
+alias ssh='TERM=xterm-256color ssh'
+
 export PATH="$HOME/.plenv/bin:$PATH"
 eval "$(plenv init -)"
 
