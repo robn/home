@@ -52,6 +52,7 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.wallpaper = "/home/robn/Pictures/fern.jpg"
+beautiful.font = "Liberation Sans 10"
 
 -- This is used later as the default terminal and editor to run.
 --terminal = "x-terminal-emulator"
@@ -243,15 +244,15 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             --mykeyboardlayout,
-            sep,
             spotify_widget({
+                font = beautiful.font,
                 play_icon = "/home/robn/.icons/Arc/actions/24/player_play.png",
                 pause_icon = "/home/robn/.icons/Arc/actions/24/player_pause.png",
                 show_tooltip = true,
                 max_length = 30,
             }),
-            sep,
             battery_widget({
+                font = beautiful.font,
                 path_to_icons = "/home/robn/.icons/Arc/status/symbolic/",
                 show_current_level = true,
                 display_notification = true,
