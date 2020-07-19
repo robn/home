@@ -134,6 +134,7 @@ mytextclock = wibox.widget.textclock("%A %e %B %Y %R")
 -- Streetturtle widgets (robn 20200718)
 -- https://github.com/streetturtle/awesome-wm-widgets
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local spotify_widget = require("awesome-wm-widgets.spotify-widget.spotify")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -241,6 +242,13 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             --mykeyboardlayout,
+            sep,
+            spotify_widget({
+                play_icon = "/home/robn/.icons/Arc/actions/24/player_play.png",
+                pause_icon = "/home/robn/.icons/Arc/actions/24/player_pause.png",
+                show_tooltip = true,
+                max_length = 30,
+            }),
             sep,
             battery_widget({
                 path_to_icons = "/home/robn/.icons/Arc/status/symbolic/",
