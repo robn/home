@@ -54,6 +54,10 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.wallpaper = "/home/robn/Pictures/fern.jpg"
 beautiful.font = "Liberation Sans 10"
 
+-- notification layout
+beautiful.notification_icon_size = 64
+beautiful.notification_font = "Liberations Sans 12"
+
 -- This is used later as the default terminal and editor to run.
 --terminal = "x-terminal-emulator"
 terminal = "/home/robn/.local/kitty.app/bin/kitty"
