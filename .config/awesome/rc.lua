@@ -453,13 +453,13 @@ clientkeys = gears.table.join(
 
     -- Volume controls (robn 2020-07-22)
     awful.key({ }, "XF86AudioMute",
-              function () awful.spawn("amixer sset Master toggle", false) end,
+              function () awful.spawn("amixer -q sset Master toggle", false) end,
               { description = "toggle volume mute", group = "system" }),
     awful.key({ }, "XF86AudioLowerVolume",
-              function () awful.spawn("amixer sset Master 5%-", false) end,
+              function () awful.spawn("amixer -q sset Master 5%-", false) end,
               { description = "decrease volume", group = "system" }),
     awful.key({ }, "XF86AudioRaiseVolume",
-              function () awful.spawn("amixer sset Master 5%+", false) end,
+              function () awful.spawn("amixer -q sset Master 5%+", false) end,
               { description = "increase volume", group = "system" })
 )
 
