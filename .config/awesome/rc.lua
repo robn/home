@@ -449,7 +449,18 @@ clientkeys = gears.table.join(
               { description = "decrease screen brightness", group = "system" }),
     awful.key({ }, "XF86MonBrightnessUp",
               function () awful.util.spawn("brightnessctl -q s +5%", false) end,
-              { description = "increase screen brightness", group = "system" })
+              { description = "increase screen brightness", group = "system" }),
+
+    -- Volume controls (robn 2020-07-22)
+    awful.key({ }, "XF86AudioMute",
+              function () awful.util.spawn("amixer sset Master toggle", false) end,
+              { description = "toggle volume mute", group = "system" }),
+    awful.key({ }, "XF86AudioLowerVolume",
+              function () awful.util.spawn("amixer sset Master 5%-", false) end,
+              { description = "decrease volume", group = "system" }),
+    awful.key({ }, "XF86AudioRaiseVolume",
+              function () awful.util.spawn("amixer sset Master 5%+", false) end,
+              { description = "increase volume", group = "system" })
 )
 
 -- Bind all key numbers to tags.
