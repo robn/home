@@ -434,32 +434,32 @@ clientkeys = gears.table.join(
 
     -- Screenshots (robn 2020-07-18)
     awful.key({ "Shift" }, "Print",
-              nil, function () awful.util.spawn("scrot -s -e 'mv $f /home/robn/Pictures/Screenshots 2>/dev/null'") end,
+              nil, function () awful.spawn("scrot -s -e 'mv $f /home/robn/Pictures/Screenshots 2>/dev/null'") end,
               { descripton = "capture selection", group = "screen" }),
     awful.key({ modkey }, "Print",
-              function () awful.util.spawn("scrot -u -b -e 'mv $f /home/robn/Pictures/Screenshots 2>/dev/null'", false) end,
+              function () awful.spawn("scrot -u -b -e 'mv $f /home/robn/Pictures/Screenshots 2>/dev/null'", false) end,
               { descripton = "capture focused window", group = "screen" }),
     awful.key({ }, "Print",
-              function () awful.util.spawn("scrot -e 'mv $f /home/robn/Pictures/Screenshots 2>/dev/null'", false) end,
+              function () awful.spawn("scrot -e 'mv $f /home/robn/Pictures/Screenshots 2>/dev/null'", false) end,
               { descripton = "capture whole screen", group = "screen" }),
 
     -- Brightness controls (robn 2020-07-22)
     awful.key({ }, "XF86MonBrightnessDown",
-              function () awful.util.spawn("brightnessctl -q s 5%-", false) end,
+              function () awful.spawn("brightnessctl -q s 5%-", false) end,
               { description = "decrease screen brightness", group = "system" }),
     awful.key({ }, "XF86MonBrightnessUp",
-              function () awful.util.spawn("brightnessctl -q s +5%", false) end,
+              function () awful.spawn("brightnessctl -q s +5%", false) end,
               { description = "increase screen brightness", group = "system" }),
 
     -- Volume controls (robn 2020-07-22)
     awful.key({ }, "XF86AudioMute",
-              function () awful.util.spawn("amixer sset Master toggle", false) end,
+              function () awful.spawn("amixer sset Master toggle", false) end,
               { description = "toggle volume mute", group = "system" }),
     awful.key({ }, "XF86AudioLowerVolume",
-              function () awful.util.spawn("amixer sset Master 5%-", false) end,
+              function () awful.spawn("amixer sset Master 5%-", false) end,
               { description = "decrease volume", group = "system" }),
     awful.key({ }, "XF86AudioRaiseVolume",
-              function () awful.util.spawn("amixer sset Master 5%+", false) end,
+              function () awful.spawn("amixer sset Master 5%+", false) end,
               { description = "increase volume", group = "system" })
 )
 
