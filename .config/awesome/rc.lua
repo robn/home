@@ -441,7 +441,15 @@ clientkeys = gears.table.join(
               { descripton = "capture focused window", group = "screen" }),
     awful.key({ }, "Print",
               function () awful.util.spawn("scrot -e 'mv $f /home/robn/Pictures/Screenshots 2>/dev/null'", false) end,
-              { descripton = "capture whole screen", group = "screen" })
+              { descripton = "capture whole screen", group = "screen" }),
+
+    -- Brightness controls (robn 2020-07-22)
+    awful.key({ }, "XF86MonBrightnessDown",
+              function () awful.util.spawn("brightnessctl -q s 5%-", false) end,
+              { description = "decrease screen brightness", group = "system" }),
+    awful.key({ }, "XF86MonBrightnessUp",
+              function () awful.util.spawn("brightnessctl -q s +5%", false) end,
+              { description = "increase screen brightness", group = "system" })
 )
 
 -- Bind all key numbers to tags.
