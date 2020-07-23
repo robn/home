@@ -266,7 +266,7 @@ awful.screen.connect_for_each_screen(function(s)
                 font = beautiful.font,
                 path_to_icons = "/home/robn/.icons/Arc/status/symbolic/",
                 show_current_level = true,
-                display_notification = true,
+                display_notification = false,
                 enable_battery_warning = false,
             }),
             --wibox.widget.systray(),
