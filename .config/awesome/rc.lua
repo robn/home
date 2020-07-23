@@ -56,6 +56,7 @@ beautiful.font = "Liberation Sans 10"
 
 -- notification layout
 beautiful.notification_icon_size = 64
+beautiful.notification_max_width = 640
 beautiful.notification_font = "Liberations Sans 12"
 
 -- This is used later as the default terminal and editor to run.
