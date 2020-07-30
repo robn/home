@@ -461,7 +461,12 @@ clientkeys = gears.table.join(
               { description = "decrease volume", group = "system" }),
     awful.key({ }, "XF86AudioRaiseVolume",
               function () awful.spawn("pulsemixer --change-volume +5", false) end,
-              { description = "increase volume", group = "system" })
+              { description = "increase volume", group = "system" }),
+
+    -- Lock (robn 2020-07-30)
+    awful.key({ modkey }, "BackSpace",
+              function () awful.spawn("xset s activate") end,
+              { description = "lock screen", group = "system" })
 )
 
 -- Bind all key numbers to tags.
