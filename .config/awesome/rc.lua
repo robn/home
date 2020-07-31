@@ -261,6 +261,7 @@ awful.screen.connect_for_each_screen(function(s)
             sep,
             volume_widget({
                 path_to_icons = "/home/robn/.icons/Arc/status/symbolic/",
+                display_notification = true,
             }),
             sep,
             battery_widget({
