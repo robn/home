@@ -18,12 +18,6 @@
   compactionHeuristic = true
 	noprefix = true
 [core]
-  pager = delta
+  pager = delta --color-only
 [interactive]
   diffFilter = delta --color-only
-[delta]
-  features = side-by-side line-numbers decorations
-[delta "decorations"]
-  commit-decoration-style = bold yellow box ul
-  file-style = bold yellow ul
-  file-decoration-style = none
