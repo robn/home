@@ -51,7 +51,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.wallpaper = "/home/robn/Pictures/fern.jpg"
+beautiful.wallpaper = "/home/robn/Pictures/waves.jpg"
 beautiful.font = "Liberation Sans 10"
 
 -- notification layout
