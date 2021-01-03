@@ -138,6 +138,11 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock("%A %e %B %Y %R")
 
+local notif_widget = wibox.widget {
+    image  = "/home/robn/.icons/Arc/status/symbolic/notification-symbolic.svg",
+    widget = wibox.widget.imagebox
+}
+
 -- Streetturtle widgets (robn 20200718)
 -- https://github.com/streetturtle/awesome-wm-widgets
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
@@ -276,6 +281,8 @@ awful.screen.connect_for_each_screen(function(s)
             mytextclock,
             sep,
             s.mylayoutbox,
+            sep,
+            notif_widget,
         },
     }
 end)
@@ -667,3 +674,97 @@ awful.spawn.with_shell(
    'xrdb -merge <<< "awesome.started:true";' ..
    'dex -e Awesome -a'
 )
+
+local notif_popup = awful.popup {
+    ontop          = true,
+    placement      = awful.placement.top_right,
+    minimum_width  = 320,
+    maximum_width  = 640,
+    visible        = #naughty.active > 0,
+    border_color   = '#777777',
+    border_width   = 2,
+    shape          = gears.shape.rounded_rect,
+
+    widget = wibox.widget {
+        {
+            base_layout = wibox.widget {
+                spacing_widget = wibox.widget {
+                    orientation = 'horizontal',
+                    span_ratio  = 0.5,
+                    widget      = wibox.widget.separator,
+                },
+                forced_width  = 30,
+                spacing       = 3,
+                layout        = wibox.layout.flex.vertical
+            },
+            widget_template = {
+                {
+                    {
+                        {
+                            naughty.widget.icon,
+                            strategy = 'min',
+                            forced_width = 64,
+                            forced_height = 64,
+                            widget = wibox.container.constraint,
+                        },
+                        margins = {
+                            right = 5,
+                        },
+                        widget = wibox.container.margin,
+                    },
+                    {
+                        naughty.widget.title,
+                        naughty.widget.message,
+                        layout = wibox.layout.fixed.vertical
+                    },
+                    layout  = wibox.layout.align.horizontal
+                },
+                margins = 5,
+                widget  = wibox.container.margin
+            },
+            widget = naughty.list.notifications,
+        },
+        nil,
+        {
+            {
+                text   = 'Dismiss all',
+                align  = 'center',
+                valign = 'center',
+                widget = wibox.widget.textbox
+            },
+            buttons = gears.table.join(
+                awful.button({ }, 1, function() naughty.destroy_all_notifications() end)
+            ),
+            forced_width       = 75,
+            shape              = gears.shape.rounded_bar,
+            shape_border_width = 1,
+            shape_border_color = beautiful.bg_highlight,
+            widget = wibox.container.background
+        },
+        layout = wibox.layout.align.vertical
+    }
+}
+
+-- We don't want to have that bar all the time, only when there is content.
+naughty.connect_signal('property::active', function ()
+    notif_popup.visible = #naughty.active > 0
+end)
+
+notif_widget:connect_signal('button::press', function ()
+    notif_popup.visible = true
+end)
+
+gears.timer.run_delayed_calls_now()
+
+naughty.connect_signal('added', function (n)
+--[[
+  print("notification:")
+  print()
+  for k,v in pairs(n) do
+    print(tostring(k)..": "..tostring(v))
+  end
+  print()
+  print()
+--]]
+  n:set_title("<b>"..n:get_title().."</b>")
+end)
