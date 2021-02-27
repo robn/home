@@ -13,10 +13,14 @@ fi
 export EDITOR=vim
 export VISUAL=/usr/bin/vim
 
-export PATH="$HOME/.plenv/bin:$PATH"
-eval "$(plenv init -)"
+if [ -d "$HOME/.plenv" ] ; then
+  export PATH="$HOME/.plenv/bin:$PATH"
+  eval "$(plenv init -)"
+fi
 
-export PATH="$HOME/.cargo/bin:$PATH"
+if [ -d "$HOME/.cargo" ] ; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
 
 #export GDK_SCALE=2
 #export GDK_DPI_SCALE=0.5
