@@ -6,8 +6,6 @@
 # change it to use preexec or precmd
 # See also https://github.com/rcaloras/bash-preexec
 
-source $HOME/.profile
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
